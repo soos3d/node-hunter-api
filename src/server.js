@@ -1,0 +1,23 @@
+const express = require('express');
+const app = express();
+const testNodeLatency = require('./testNodeLatency');
+const endpointsList = require('./endpointsList');
+require('dotenv').config();
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+  
+  app.get('/run-node', async (req, res) => {
+    const index = req.query.index;
+    const endpoint = endpointsList[index];
+    const result = await testNodeLatency(endpoint);
+    res.send({ result });
+  });
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
