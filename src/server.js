@@ -6,9 +6,9 @@ const endpointsList = require('./endpointsList');
 require('dotenv').config();
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", process.env.PERMITTED_DOMAIN);
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+  res.header("Access-Control-Allow-Origin", '*');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
 const limiter = rateLimit({
@@ -17,22 +17,29 @@ const limiter = rateLimit({
   message: "Too many requests, please try again later"
 });
 
-// apply the limiter to all requests
+// Apply the limiter to all requests
 app.use(limiter);
 
 let results = [];
 let lastRun = null;
 
+async function runTests() {
+  lastRun = Date.now();
+  results = [];
+  for (const endpoint of endpointsList) {
+    const result = await testNodeLatency(endpoint);
+    results.push(result);
+  }
+  console.log(results);
+}
+
 const intervalId = setInterval(async () => {
   lastRun = Date.now();
   results = [];
-  for (let i = 0; i < endpointsList.length; i++) {
-    const endpoint = endpointsList[i];
-    const result = await testNodeLatency(endpoint);
-    results.push(result);
-    console.log(results)
-  }
+  runTests();
 }, 300000); // 5 minutes in milliseconds
+
+runTests();
 
 app.get('/results', (req, res) => {
   res.send({ results, lastRun });
