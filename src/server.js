@@ -11,8 +11,10 @@ app.use((req, res, next) => {
 });
 
 let results = [];
+let lastRun = null;
 
 const intervalId = setInterval(async () => {
+  lastRun = Date.now();
   results = [];
   for (let i = 0; i < endpointsList.length; i++) {
     const endpoint = endpointsList[i];
@@ -23,7 +25,7 @@ const intervalId = setInterval(async () => {
 }, 300000); // 5 minutes in milliseconds
 
 app.get('/results', (req, res) => {
-  res.send({ results });
+  res.send({ results, lastRun });
 });
 
 /*
