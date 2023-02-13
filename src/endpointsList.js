@@ -5,6 +5,7 @@ const endpointsList = [
     process.env.ALCHEMY,
     process.env.QUICKNODE,
     process.env.INFURA,
+    process.env.ANKR,
   ];
   
 module.exports = endpointsList;
