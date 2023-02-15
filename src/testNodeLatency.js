@@ -40,7 +40,7 @@ async function testNodeLatency(endpoint) {
 
     //console.log(`total: ${time}`)
     console.log(endpoint.substring(0, 25))
-    console.log(`Average request time based on ${rounds} requests is ${average.toFixed(2)}ms \n`);
+    console.log(`Average request time based on ${rounds -1} requests is ${average.toFixed(2)}ms \n`);
     return average.toFixed(2);
 }
 
