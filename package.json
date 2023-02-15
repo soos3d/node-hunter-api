@@ -7,12 +7,5 @@
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
     "web3": "^1.8.2"
-  },
-  "scripts": {
-    "start": "node index.js",
-    "stop-5000": "lsof -ti tcp:5000 | xargs kill",
-    "stop-3000": "lsof -ti tcp:3000 | xargs kill",
-    "restart-5000": "npm run stop-5000 && npm start",
-    "restart-3000": "npm run stop-3000 && npm start"
   }
 }
