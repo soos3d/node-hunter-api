@@ -8,6 +8,7 @@ const endpointsList = [
     process.env.ANKR,
     process.env.CLOUDFLARE,
     process.env.FLASHBOTS,
+    process.env.LAMA,
   ];
   
 module.exports = endpointsList;
