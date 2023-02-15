@@ -9,7 +9,7 @@ const endpointsList = [
     process.env.CLOUDFLARE,
     process.env.FLASHBOTS,
     process.env.LAMA,
-    process.env.RIVET,
+    process.env.POKT,
   ];
   
 module.exports = endpointsList;
