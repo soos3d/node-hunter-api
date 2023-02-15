@@ -6,7 +6,8 @@ const endpointsList = [
     process.env.QUICKNODE,
     process.env.INFURA,
     process.env.ANKR,
-    process.env.CLOUDFLARE
+    process.env.CLOUDFLARE,
+    process.env.FLASHBOTS,
   ];
   
 module.exports = endpointsList;
