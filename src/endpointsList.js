@@ -10,6 +10,7 @@ const endpointsList = [
     process.env.FLASHBOTS,
     process.env.LAMA,
     process.env.POKT,
+    process.env.BLAST,
   ];
   
 module.exports = endpointsList;
