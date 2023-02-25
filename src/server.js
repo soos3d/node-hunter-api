@@ -34,7 +34,7 @@ async function runTests() {
   
   for (let i = 0; i < results.length; i++) {
     if (!results[i]) {
-      results[i] = Number.POSITIVE_INFINITY;
+      results[i] = 99999999;
     }
   }
   
