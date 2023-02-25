@@ -30,14 +30,6 @@ async function runTests() {
     const result = await testNodeLatency(endpoint);
     results.push(result);
   }
-  //console.log(results);
-  
-  for (let i = 0; i < results.length; i++) {
-    if (!results[i]) {
-      results[i] = 99999999;
-    }
-  }
-  
   console.log(results);
 }
 
