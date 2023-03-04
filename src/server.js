@@ -2,6 +2,7 @@ const express = require('express');
 const rateLimit = require("express-rate-limit");
 const app = express();
 const testNodeLatency = require('./testNodeLatency');
+const testNodeSettings = require('./testNodeSettings');
 const endpointsList = require('./endpointsList');
 require('dotenv').config();
 
@@ -21,6 +22,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 let results = [];
+let settingsResults = []
 let lastRun = null;
 
 async function runTests() {
@@ -33,16 +35,33 @@ async function runTests() {
   console.log(results);
 }
 
+async function runSettings() {
+
+  settingsResults = [];
+  for (const endpoint of endpointsList) {
+    const settingsResult = await testNodeSettings(endpoint);
+    settingsResults.push(settingsResult);
+  }
+  console.log(settingsResults);
+}
+
 const intervalId = setInterval(async () => {
   lastRun = Date.now();
   results = [];
+  settingsResults = [];
   runTests();
-}, 300000); // 5 minutes in milliseconds
+  runSettings();
+}, 900000); // 15 minutes in milliseconds
 
 runTests();
+runSettings()
 
 app.get('/results', (req, res) => {
   res.send({ results, lastRun });
+});
+
+app.get('/settings', (req, res) => {
+  res.send({ settingsResults });
 });
 
 // Enable running on-demand tests
