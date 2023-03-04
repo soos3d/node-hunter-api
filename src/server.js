@@ -49,12 +49,17 @@ const intervalId = setInterval(async () => {
   lastRun = Date.now();
   results = [];
   settingsResults = [];
-  runTests();
-  runSettings();
+  await runTests();
+  await runSettings();
 }, 900000); // 15 minutes in milliseconds
 
-runTests();
-runSettings()
+// Run the tests once when the server is deployed
+async function  main() {
+  await runTests();
+  await runSettings();
+}
+
+main()
 
 app.get('/results', (req, res) => {
   res.send({ results, lastRun });
