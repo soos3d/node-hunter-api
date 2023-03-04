@@ -66,7 +66,6 @@ async function isDebug(endpoint) {
   async function testNodeSettings(nodeEndpoint) {
     
     try {
-      console.log(`Running settings test...`)
       const [isArchiveResult, isDebugResult, client] = await Promise.all([isArchive(nodeEndpoint), isDebug(nodeEndpoint), clientVersion(nodeEndpoint)]);
       //console.log(`isArchive: ${isArchiveResult}, isDebug: ${isDebugResult}, client: ${client}`);
       return [isArchiveResult, isDebugResult, client];

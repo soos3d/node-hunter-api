@@ -3,6 +3,7 @@ const rateLimit = require("express-rate-limit");
 const app = express();
 const testNodeLatency = require('./testNodeLatency');
 const testNodeSettings = require('./testNodeSettings');
+const getLocation = require('./getLocation');
 const endpointsList = require('./endpointsList');
 require('dotenv').config();
 
@@ -23,6 +24,7 @@ app.use(limiter);
 
 let results = [];
 let settingsResults = []
+let location = []
 let lastRun = null;
 
 async function runTests() {
@@ -36,7 +38,7 @@ async function runTests() {
 }
 
 async function runSettings() {
-
+  console.log(`Running settings test...`)
   settingsResults = [];
   for (const endpoint of endpointsList) {
     const settingsResult = await testNodeSettings(endpoint);
@@ -45,18 +47,30 @@ async function runSettings() {
   console.log(settingsResults);
 }
 
+async function findLocation() {
+  console.log(`Running location test...`)
+  location = [];
+  for (const endpoint of endpointsList) {
+    const findLocation = await getLocation(endpoint);
+    location.push(findLocation);
+  }
+  console.log(location);
+}
+
 const intervalId = setInterval(async () => {
   lastRun = Date.now();
   results = [];
   settingsResults = [];
   await runTests();
   await runSettings();
+  await findLocation();
 }, 900000); // 15 minutes in milliseconds
 
 // Run the tests once when the server is deployed
 async function  main() {
   await runTests();
   await runSettings();
+  await findLocation();
 }
 
 main()
@@ -67,6 +81,10 @@ app.get('/results', (req, res) => {
 
 app.get('/settings', (req, res) => {
   res.send({ settingsResults });
+});
+
+app.get('/location', (req, res) => {
+  res.send({ location });
 });
 
 // Enable running on-demand tests
