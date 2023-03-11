@@ -13,9 +13,12 @@ async function getLocation(endpoint) {
     // Get the data we want from the response
     const region = response.data.regionName
     const country = response.data.countryCode
+    const cloud = response.data.isp
 
     // Pack the data into an array and return
-    const location = [region, country]
+    const location = [region, country, cloud]
+    //console.log(location)
+
     return location
 
   } catch (error) {
