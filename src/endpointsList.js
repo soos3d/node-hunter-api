@@ -11,6 +11,7 @@ const endpointsList = [
     process.env.LAMA,
     process.env.POKT,
     process.env.BLAST,
+    process.env.NODEREAL,
   ];
   
 module.exports = endpointsList;
