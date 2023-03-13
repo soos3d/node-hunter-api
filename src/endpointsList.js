@@ -14,7 +14,6 @@ const endpointsList = [
     process.env.NODEREAL,
     process.env.GATEWAY,
     process.env.ALLTHATNODE,
-    proccess.env.placeholer,
   ];
   
 module.exports = endpointsList;
