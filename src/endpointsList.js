@@ -13,6 +13,7 @@ const endpointsList = [
     process.env.BLAST,
     process.env.NODEREAL,
     process.env.GATEWAY,
+    process.env.ALLTHATNODE,
   ];
   
 module.exports = endpointsList;
